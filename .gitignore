@@ -1,0 +1,32 @@
+# Dependências
+node_modules/
+.venv/
+
+# Caches do Expo & React Native / Flutter
+.expo/
+.dart_tool/
+build/
+*.mobileprovision
+*.orig.*
+
+# Logs e Coleta de Lixo (Garbage Collection)
+*.log
+.maestro/logs/
+.fingerprint-*.json
+.flutter-fingerprint-*
+
+# Variáveis de Ambiente & Segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.keystore
+
+# Dashboard & Artefactos gerados
+dashboard/.next/
+dashboard/dist/
+dashboard/node_modules/
+
+# Ficheiros do Sistema Operativo
+.DS_Store
+Thumbs.db

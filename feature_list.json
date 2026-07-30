@@ -1,0 +1,63 @@
+{
+  "project_name": "Mobile Harness App",
+  "framework": "hybrid-ready (React Native/Expo or Flutter)",
+  "current_sprint": 1,
+  "features": [
+    {
+      "id": "F-01",
+      "epic": "Autenticação",
+      "name": "Configuração do Supabase Auth & Tela de Login",
+      "description": "Implementar o fluxo de autenticação (cadastro, login e persistência de sessão) utilizando o Supabase Auth e gerenciamento de estado local.",
+      "status": "todo",
+      "tasks": [
+        "Configurar o Supabase Client utilizando variáveis de ambiente seguras",
+        "Criar a Store de Autenticação (Zustand para RN ou Store/Notifier para Flutter)",
+        "Desenvolver componente visual da Tela de Login/Cadastro com validação estática de inputs",
+        "Implementar fluxo de persistência de sessão (tokens salvos em SecureStore ou Keychain)",
+        "Adicionar identificadores estáticos para automação de testes (testID no RN ou ValueKey no Flutter)"
+      ],
+      "verification": {
+        "static_check": "npm run lint || flutter analyze",
+        "unit_tests": "npm run testAuth || flutter test test/auth_test.dart",
+        "e2e_tests": "maestro test .maestro/login-flow.yaml"
+      }
+    },
+    {
+      "id": "F-02",
+      "epic": "Notas Core",
+      "name": "Criação e Persistência de Notas locais/nuvem",
+      "description": "Desenvolver a funcionalidade de criação de notas textuais, persistindo no Supabase Database em tempo real com fallback/cache local offline.",
+      "status": "todo",
+      "tasks": [
+        "Criar migração do banco de dados local/nuvem para a tabela 'notes' no Supabase",
+        "Executar codegen de tipos para blindar o modelo de dados contra schema adivinhado",
+        "Implementar a Service de Notas centralizada seguindo o architecture.md",
+        "Criar o formulário de escrita de notas com tratamento amigável de erros",
+        "Integrar estado offline/Zustand com sincronização assíncrona (TanStack Query se RN)"
+      ],
+      "verification": {
+        "static_check": "npm run lint || flutter analyze",
+        "unit_tests": "npm run testNotes || flutter test test/notes_test.dart",
+        "e2e_tests": "maestro test .maestro/create-note-flow.yaml"
+      }
+    },
+    {
+      "id": "F-03",
+      "epic": "Notas Core",
+      "name": "Listagem Dinâmica e Busca de Notas",
+      "description": "Apresentar a lista de notas criadas de forma performática, permitindo rolagem infinita (infinite scroll) e busca textual local/remota.",
+      "status": "todo",
+      "tasks": [
+        "Criar componente de listagem performática (FlatList otimizado no RN ou ListView.builder no Flutter)",
+        "Implementar barra de pesquisa com debounce para evitar requisições redundantes de IA/API",
+        "Integrar tratamento visual de estado vazio (Empty State) e carregamento (Skeleton Shimmer)",
+        "Adicionar testes unitários para o filtro de busca textual"
+      ],
+      "verification": {
+        "static_check": "npm run lint || flutter analyze",
+        "unit_tests": "npm run testSearch || flutter test test/search_test.dart",
+        "e2e_tests": "maestro test .maestro/list-and-search-flow.yaml"
+      }
+    }
+  ]
+}
