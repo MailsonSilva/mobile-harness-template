@@ -1,15 +1,26 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import fs from 'fs';
+import path from 'path';
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const { prompt, model } = await req.json();
+    const { message } = await req.json();
+    const rootDir = process.cwd();
 
-    // Rota universal de integração com agentes de IA (Claude Code, OpenCode, Codex, etc.)
+    // Lê o contexto atual do harness
+    const featureListPath = path.join(rootDir, '..', 'feature_list.json');
+    let featureList = { features: [] };
+    if (fs.existsSync(featureListPath)) {
+      featureList = JSON.parse(fs.readFileSync(featureListPath, 'utf-8'));
+    }
+
+    // Aqui insere a orquestração agnóstica do agente desejado
     return NextResponse.json({
-      success: true,
-      output: `[Agente Harness - Modelo: ${model || 'Claude 3.5 Sonnet'}]\nInstrução recebida: "${prompt}"\n\nExecutando ciclo: PLAN ➔ EXECUTE ➔ VALIDATE...`,
+      status: 'success',
+      message: `Prompt recebido para o harness: "${message}"`,
+      activeFeatures: featureList.features
     });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
