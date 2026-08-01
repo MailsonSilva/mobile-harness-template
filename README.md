@@ -1,13 +1,8 @@
----
-
-# 🚀 README.md
-
-```markdown
-# 🚀 Mobile Harness Template (Pi Agent Base)
+# 🚀 Universal Mobile Harness Template
 
 > **Template de Engenharia de Harness para Desenvolvimento Mobile Autónomo com Agentes de IA (React Native / Expo & Flutter).**
 
-Este repositório é um **Template de Repositório do GitHub** pronto para produção, construído sobre o **Pi Coding Agent** (`@earendil-works/pi-coding-agent`). Ele fornece uma infraestrutura determinística de governança, validação automática e observabilidade visual para que agentes de IA (Pi, Claude Code, Cursor, Codex) desenvolvam aplicações mobile sem regressões de código nem decaimento de estado.
+Este repositório é um **Template de Repositório do GitHub** pronto para produção. Ele fornece uma infraestrutura determinística de governança, validação automática via sensores computacionais e observabilidade visual para que qualquer agente de IA (Claude Code, Cursor, Codex, OpenCode, Copilot, etc.) desenvolva aplicações mobile sem regressões de código nem decaimento de estado.
 
 ---
 
@@ -16,18 +11,18 @@ Este repositório é um **Template de Repositório do GitHub** pronto para produ
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────┐
 │                   CAMADA 1: INTERFACE & INTEROPERABILIDADE                       │
-│  • Pi TUI HUD / Cockpit Web (RPC) / Cursor  • Symlink Universal: CLAUDE.md <-> AGENTS.md│
+│  • Cockpit Web / CLI do Agente / Cursor  • Symlink Universal: CLAUDE.md <-> AGENTS.md │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │
 ┌────────────────────────────────────────▼─────────────────────────────────────────┐
 │              CAMADA 2: CONTEXTO ENXUTO & GOVERNAÇÃO DE RACIOCÍNIO                │
-│  • AGENTS.md Index (~100 linhas)    • Progressive Disclosure (docs/*)            │
+│  • AGENTS.md Index (~100 linhas)    • Bootstrapping Dinâmico via PRD.md          │
 │  • Reasoning Sandwich (Plan → Execute → Validate) em progress.md                 │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │
 ┌────────────────────────────────────────▼─────────────────────────────────────────┐
 │              CAMADA 3: EXTENSÕES, PIPELINE & OTIMIZAÇÃO NATIVA                   │
-│  • EAS Fingerprint / Flutter Check  • Supabase Codegen  • Metro & Maestro Tools    │
+│  • EAS Fingerprint / Supabase Codegen  • Expo Metro & Maestro Tools               │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │
 ┌────────────────────────────────────────▼─────────────────────────────────────────┐
@@ -40,75 +35,37 @@ Este repositório é um **Template de Repositório do GitHub** pronto para produ
 │                  CAMADA 5: OBSERVABILIDADE & TELEMETRIA                          │
 │  • Tracing via Langfuse / OpenTelemetry  • Rastreio de Tokens e Custo por PR       │
 └──────────────────────────────────────────────────────────────────────────────────┘
+
 📂 Estrutura de Ficheiros do Repositório
-Plaintext
+
 mobile-harness-template/
+├── PRD.md                  # Documento de Requisitos do Produto (Definição do App)
 ├── AGENTS.md               # Manual de Governação enxuto (Protocolo Sanduíche de Raciocínio)
 ├── CLAUDE.md -> AGENTS.md  # Link simbólico para interoperabilidade multi-agente
 ├── init.sh                 # Script de automação de ambiente, verificação e limpeza
-├── feature_list.json       # Matriz de tarefas e épicos da aplicação
+├── feature_list.json       # Matriz autogerada de tarefas do aplicativo
 ├── progress.md             # Diário de bordo e estado persistente do agente
-├── cicd-pipeline.md        # Documentação do pipeline de CI/CD (EAS Workflows & GitHub Actions)
-├── .gitignore              # Proteção contra caches, logs e segredos
-├── .pi/                    # Extensões e tsconfig dedicado do Pi Agent
-│   ├── tsconfig.json       # Configuração TypeScript isolada para a pasta .pi
-│   └── extensions/
-│       └── status-hud.ts   # HUD visual para o terminal
 ├── docs/                   # Progressive Disclosure (Contexto sob procura)
-│   ├── architecture.md     # Limites estruturais e regras de imports (UI ➔ Service ➔ Repo)
+│   ├── architecture.md     # Limites estruturais e regras de imports
 │   ├── supabase-api.md     # Codegen de tipos, RLS e autenticação
-│   ├── mobile-ui.md        # Design System e seletores testID / ValueKey
+│   ├── mobile-ui.md        # Design System e seletores testID
 │   └── testing.md          # Pirâmide de testes (Estático, Unidade e Maestro E2E)
-└── dashboard/              # Cockpit Visual Web
+└── dashboard/              # Cockpit Visual Web Universal
     ├── package.json
     └── src/
-        ├── components/
-        │   └── LiveExecutionStream.tsx # Stream de execução em tempo real
-        └── server/
-            └── pi-bridge.ts            # Ponte de comunicação RPC com o Pi Agent
-🥪 O Protocolo "Sanduíche de Raciocínio"
-Todos os agentes a operar neste repositório são mecanicamente obrigados a seguir três fases para qualquer alteração:
-
-PLAN (Raciocinar): Ler a feature_list.json e registar no progress.md o plano de execução, ficheiros afetados e potenciais efeitos colaterais.
-
-EXECUTE (Executar): Implementar o código em TypeScript/Dart de forma enxuta e tipada.
-
-VALIDATE (Validar): Executar a suíte de validação estática e testes (npm run check / flutter analyze). A tarefa só é dada como concluída se passar em todos os sensores.
+        └── app/
+            ├── api/agent/chat/route.ts  # API de integração com o Agente
+            └── page.tsx                 # Interface gráfica interativa
 
 🚀 Como Iniciar um Novo Projeto
-1. Usar como Template
-No GitHub, clique em "Use this template" ➔ "Create a new repository".
+Crie um novo repositório no GitHub a partir deste template.
 
-2. Clonar e Inicializar o Ambiente
-Bash
-git clone [https://github.com/SEU_USUARIO/meu-novo-app.git](https://github.com/SEU_USUARIO/meu-novo-app.git)
-cd meu-novo-app
+Adicione ou edite o arquivo PRD.md na raiz com a descrição do seu novo aplicativo.
 
-# Instalar definições de tipos locais para extensões
-npm install --save-dev @types/node @earendil-works/pi-coding-agent
+Inicie a interface visual:
 
-# Executar o script de inicialização e sanidade
-chmod +x init.sh
-./init.sh
-3. Iniciar a Execução com o Pi Agent
-📱 Modo Terminal (TUI com HUD):
-Bash
-pi
-🖥️ Modo Cockpit Visual Web:
 Bash
 cd dashboard
 npm install
 npm run dev
-Aceda a http://localhost:3000 para orquestrar o agente visualmente.
-
-🛡️ Regras Invioláveis do Repositório
-Zero any: Proibido o uso de tipos fracos ou ignorar verificações estáticas.
-
-UI Isolada: Componentes de tela nunca acedem diretamente a clientes de banco de dados ou SDKs de backend (consulte docs/architecture.md).
-
-Testability: Todo o elemento interativo deve possuir testID (React Native) ou ValueKey (Flutter).
-
-Continuous Garbage Collection: O init.sh purga ficheiros temporários e caches a cada execução.
-
-📄 Licença
-Licença MIT. Livre para utilização e customização em projetos comerciais e pessoais.
+Acesse http://localhost:3000 e envie a instrução inicial ao agente para realizar o bootstrapping do projeto!            

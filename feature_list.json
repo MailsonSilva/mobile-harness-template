@@ -1,62 +1,79 @@
 {
-  "project_name": "Mobile Harness App",
-  "framework": "hybrid-ready (React Native/Expo or Flutter)",
+  "project_name": "Lotae Mobile App",
+  "framework": "React Native (Expo) + TypeScript + Supabase + Zustand + NativeWind",
   "current_sprint": 1,
   "features": [
     {
-      "id": "F-01",
-      "epic": "Autenticação",
-      "name": "Configuração do Supabase Auth & Tela de Login",
-      "description": "Implementar o fluxo de autenticação (cadastro, login e persistência de sessão) utilizando o Supabase Auth e gerenciamento de estado local.",
-      "status": "todo",
+      "id": "F-00",
+      "epic": "Bootstrapping",
+      "name": "Ingestão do PRD e Geração Autônoma da Matriz de Tarefas",
+      "description": "Análise do documento de requisitos do produto (PRD.md) e configuração inicial do harness e feature list.",
+      "status": "completed",
       "tasks": [
-        "Configurar o Supabase Client utilizando variáveis de ambiente seguras",
-        "Criar a Store de Autenticação (Zustand para RN ou Store/Notifier para Flutter)",
-        "Desenvolver componente visual da Tela de Login/Cadastro com validação estática de inputs",
-        "Implementar fluxo de persistência de sessão (tokens salvos em SecureStore ou Keychain)",
-        "Adicionar identificadores estáticos para automação de testes (testID no RN ou ValueKey no Flutter)"
+        "Ler e analisar PRD.md na raiz do repositório",
+        "Mapear Épicos e Features para a matriz feature_list.json",
+        "Configurar o progresso inicial no progress.md"
       ],
       "verification": {
-        "static_check": "npm run lint || flutter analyze",
-        "unit_tests": "npm run testAuth || flutter test test/auth_test.dart",
+        "static_check": "npx tsc --noEmit",
+        "unit_tests": "npm test",
+        "e2e_tests": "maestro test .maestro/lotae-main-flow.yaml"
+      }
+    },
+    {
+      "id": "F-01",
+      "epic": "Autenticação & Perfil de Utilizador",
+      "name": "Autenticação Supabase Auth, SecureStore e Gestão de Perfil",
+      "description": "Implementar o fluxo de login/cadastro com validação, persistência segura de sessão e níveis de permissão (Passageiro, Operador, Admin).",
+      "status": "in-progress",
+      "tasks": [
+        "Configurar o Supabase Client com variáveis de ambiente seguras",
+        "Criar a Store de Autenticação (Zustand) com persistência em expo-secure-store",
+        "Desenvolver Tela de Login e Cadastro (LoginScreen.tsx) com validação e testIDs",
+        "Implementar gestão de perfil e níveis de permissão",
+        "Adicionar identificadores estáticos (testID) para automação de testes"
+      ],
+      "verification": {
+        "static_check": "npx tsc --noEmit && npm run lint",
+        "unit_tests": "npm test",
         "e2e_tests": "maestro test .maestro/login-flow.yaml"
       }
     },
     {
       "id": "F-02",
-      "epic": "Notas Core",
-      "name": "Criação e Persistência de Notas locais/nuvem",
-      "description": "Desenvolver a funcionalidade de criação de notas textuais, persistindo no Supabase Database em tempo real com fallback/cache local offline.",
+      "epic": "Gestão de Lotações & Rotas (Core)",
+      "name": "Listagem Dinâmica de Rotas e Painel do Operador",
+      "description": "Desenvolver listagem de rotas com indicador visual de lotação (Vagas/Esgotado), painel do operador e serviço centralizado LotaeService.",
       "status": "todo",
       "tasks": [
-        "Criar migração do banco de dados local/nuvem para a tabela 'notes' no Supabase",
-        "Executar codegen de tipos para blindar o modelo de dados contra schema adivinhado",
-        "Implementar a Service de Notas centralizada seguindo o architecture.md",
-        "Criar o formulário de escrita de notas com tratamento amigável de erros",
-        "Integrar estado offline/Zustand com sincronização assíncrona (TanStack Query se RN)"
+        "Criar migração do banco de dados para rotas e lotações no Supabase",
+        "Executar codegen de tipos em src/types/supabase.ts",
+        "Implementar a Service centralizada (LotaeService.ts)",
+        "Desenvolver componentes de listagem de rotas e indicador de lotação com testIDs",
+        "Integrar estado global com Zustand para cache e sincronização offline-first"
       ],
       "verification": {
-        "static_check": "npm run lint || flutter analyze",
-        "unit_tests": "npm run testNotes || flutter test test/notes_test.dart",
-        "e2e_tests": "maestro test .maestro/create-note-flow.yaml"
+        "static_check": "npx tsc --noEmit && npm run lint",
+        "unit_tests": "npm test",
+        "e2e_tests": "maestro test .maestro/routes-flow.yaml"
       }
     },
     {
       "id": "F-03",
-      "epic": "Notas Core",
-      "name": "Listagem Dinâmica e Busca de Notas",
-      "description": "Apresentar a lista de notas criadas de forma performática, permitindo rolagem infinita (infinite scroll) e busca textual local/remota.",
+      "epic": "Reservas & Validação de Check-in",
+      "name": "Fluxo de Reservas, Check-in via QR Code e Tratamento Visual",
+      "description": "Implementar fluxo de reserva de lugares, validação de bilhetes e estados visuais (Skeleton Shimmer e Empty State).",
       "status": "todo",
       "tasks": [
-        "Criar componente de listagem performática (FlatList otimizado no RN ou ListView.builder no Flutter)",
-        "Implementar barra de pesquisa com debounce para evitar requisições redundantes de IA/API",
-        "Integrar tratamento visual de estado vazio (Empty State) e carregamento (Skeleton Shimmer)",
-        "Adicionar testes unitários para o filtro de busca textual"
+        "Implementar fluxo de reserva de lugares com transação Supabase em tempo real",
+        "Criar funcionalidade de validação de bilhete/reserva",
+        "Integrar Skeleton Shimmer e Empty State para tratamento visual de carregamento e vagas esgotadas",
+        "Adicionar testes unitários para o fluxo de reservas"
       ],
       "verification": {
-        "static_check": "npm run lint || flutter analyze",
-        "unit_tests": "npm run testSearch || flutter test test/search_test.dart",
-        "e2e_tests": "maestro test .maestro/list-and-search-flow.yaml"
+        "static_check": "npx tsc --noEmit && npm run lint",
+        "unit_tests": "npm test",
+        "e2e_tests": "maestro test .maestro/reservation-flow.yaml"
       }
     }
   ]

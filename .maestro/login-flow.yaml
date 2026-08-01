@@ -1,0 +1,25 @@
+appId: com.lotae.mobile
+---
+- clearState
+- launchApp
+
+# 1. Verificar tela de login visível via testID
+- assertVisible:
+    id: "login-container"
+
+# 2. Preencher email e senha usando testIDs estáveis
+- tapOn:
+    id: "input-email"
+- inputText: "passageiro@lotae.com"
+
+- tapOn:
+    id: "input-senha"
+- inputText: "SenhaSegura123"
+
+# 3. Clicar no botão entrar
+- tapOn:
+    id: "botao-entrar"
+
+# 4. Validar sucesso (dashboard home visível)
+- assertVisible:
+    id: "dashboard-home"
