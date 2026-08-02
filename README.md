@@ -1,71 +1,102 @@
 # 🚀 Universal Mobile Harness Template
 
-> **Template de Engenharia de Harness para Desenvolvimento Mobile Autónomo com Agentes de IA (React Native / Expo & Flutter).**
+> **Infraestrutura de Engenharia de Harness para Desenvolvimento Mobile Autónomo e Multi-Agente (React Native / Expo & Flutter).**
 
-Este repositório é um **Template de Repositório do GitHub** pronto para produção. Ele fornece uma infraestrutura determinística de governança, validação automática via sensores computacionais e observabilidade visual para que qualquer agente de IA (Claude Code, Cursor, Codex, OpenCode, Copilot, etc.) desenvolva aplicações mobile sem regressões de código nem decaimento de estado.
+Este repositório é um **Template do GitHub** pronto para produção. Ele fornece uma camada determinística de governança, automação de sanidade, instalação dinâmica de **Skills de Especialistas** e um cockpit visual de observabilidade para qualquer agente de IA (Claude Code, Cursor, Codex, OpenCode, entre outros).
 
 ---
 
-## 🏛️ As 5 Camadas da Arquitetura do Harness
+## 🏛️ A Arquitetura do Harness Mobile em 5 Camadas
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│                   CAMADA 1: INTERFACE & INTEROPERABILIDADE                       │
-│  • Cockpit Web / CLI do Agente / Cursor  • Symlink Universal: CLAUDE.md <-> AGENTS.md │
+│ CAMADA 1: INTERFACING & MULTI-AGENTE                                             │
+│ • Claude Code / Cursor / Codex / CLI                                             │
+│ • Symlink Universal: CLAUDE.md <-> AGENTS.md                                     │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │
 ┌────────────────────────────────────────▼─────────────────────────────────────────┐
-│              CAMADA 2: CONTEXTO ENXUTO & GOVERNAÇÃO DE RACIOCÍNIO                │
-│  • AGENTS.md Index (~100 linhas)    • Bootstrapping Dinâmico via PRD.md          │
-│  • Reasoning Sandwich (Plan → Execute → Validate) em progress.md                 │
+│ CAMADA 2: CONTEXTO ENXUTO & SISTEMA DINÂMICO DE SKILLS                          │
+│ • AGENTS.md Index (~100 linhas) + Progressive Disclosure (docs/*)                │
+│ • Sistema Dinâmico de Skills (.claude/skills/*)                                  │
+│ • Protocolo Sanduíche de Raciocínio (PLAN ➔ EXECUTE ➔ VALIDATE)                  │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │
 ┌────────────────────────────────────────▼─────────────────────────────────────────┐
-│              CAMADA 3: EXTENSÕES, PIPELINE & OTIMIZAÇÃO NATIVA                   │
-│  • EAS Fingerprint / Supabase Codegen  • Expo Metro & Maestro Tools               │
+│ CAMADA 3: AUTOMATIZAÇÃO DE HABILIDADES (MASTER-SKILL & SCRIPTS)                  │
+│ • Master-Skill: skill-manager                                                    │
+│ • Autómato de Instalação: scripts/install-skill.sh                               │
+│ • Auto-registo dinâmico de novas skills no AGENTS.md                             │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │
 ┌────────────────────────────────────────▼─────────────────────────────────────────┐
-│             CAMADA 4: SENSORES INTELIGENTES & COLETA DE LIXO                     │
-│  • Mechanical Enforcers (Linters guiados com mensagens de autocorreção)           │
-│  • Continuous Garbage Collection (Purge de caches do Metro/Maestro e DB Reset)    │
+│ CAMADA 4: SENSORES COMPUTACIONAIS & GARBAGE COLLECTION                           │
+│ • Mechanical Enforcers (tsc, ESLint, Jest, Maestro E2E)                          │
+│ • Continuous Garbage Collection & Expo/Nativo Fingerprint (init.sh)              │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │
 ┌────────────────────────────────────────▼─────────────────────────────────────────┐
-│                  CAMADA 5: OBSERVABILIDADE & TELEMETRIA                          │
-│  • Tracing via Langfuse / OpenTelemetry  • Rastreio de Tokens e Custo por PR       │
+│ CAMADA 5: COCKPIT VISUAL & OBSERVABILIDADE                                       │
+│ • Dashboard Web Universal em Next.js (dashboard/)                                │
 └──────────────────────────────────────────────────────────────────────────────────┘
 
-📂 Estrutura de Ficheiros do Repositório
+🧰 Sistema Dinâmico de Skills
+O Harness utiliza o Padrão Aberto de Agent Skills (.claude/skills/). O agente só carrega o contexto do especialista no momento exato em que a tarefa exige essa atuação.
 
-mobile-harness-template/
-├── PRD.md                  # Documento de Requisitos do Produto (Definição do App)
-├── AGENTS.md               # Manual de Governação enxuto (Protocolo Sanduíche de Raciocínio)
-├── CLAUDE.md -> AGENTS.md  # Link simbólico para interoperabilidade multi-agente
-├── init.sh                 # Script de automação de ambiente, verificação e limpeza
-├── feature_list.json       # Matriz autogerada de tarefas do aplicativo
-├── progress.md             # Diário de bordo e estado persistente do agente
-├── docs/                   # Progressive Disclosure (Contexto sob procura)
-│   ├── architecture.md     # Limites estruturais e regras de imports
-│   ├── supabase-api.md     # Codegen de tipos, RLS e autenticação
-│   ├── mobile-ui.md        # Design System e seletores testID
-│   └── testing.md          # Pirâmide de testes (Estático, Unidade e Maestro E2E)
-└── dashboard/              # Cockpit Visual Web Universal
-    ├── package.json
-    └── src/
-        └── app/
-            ├── api/agent/chat/route.ts  # API de integração com o Agente
-            └── page.tsx                 # Interface gráfica interativa
+🛠️ Instalação Automática de Novas Skills
+Pode instalar novas skills especialistas diretamente a partir de um repositório Git ou de uma pasta local utilizando o script ou a Master-Skill:
 
-🚀 Como Iniciar um Novo Projeto
-Crie um novo repositório no GitHub a partir deste template.
+1. Via Terminal:
+Bash
+./scripts/install-skill.sh <URL_GIT_OU_PASTA_LOCAL> <NOME_DA_SKILL>
 
-Adicione ou edite o arquivo PRD.md na raiz com a descrição do seu novo aplicativo.
+# Exemplo:
+./scripts/install-skill.sh [https://github.com/usuario/skill-react-native-expert](https://github.com/usuario/skill-react-native-expert) react-native-expert
+2. Via Prompt de IA (Master-Skill skill-manager):
+Basta instruir o seu agente de IA no terminal:
 
-Inicie a interface visual:
+"Baixe a skill do repositório https://github.com/usuario/skill-backend-supabase com o nome backend-supabase e registe no Harness."
+
+O automato irá:
+
+Copiar/clonar os ficheiros da skill para .claude/skills/<nome-da-skill>/.
+
+Ler a descrição YAML no cabeçalho do SKILL.md.
+
+Adicionar automaticamente a entrada no mapa de governança do AGENTS.md.
+
+🚀 Como Iniciar
+1. Usar como Template
+Clique no botão "Use this template" no topo da página do GitHub para criar o seu repositório.
+
+2. Inicializar o Ambiente
+Clone e execute o script de automação e sanidade:
+
+Bash
+git clone [https://github.com/SEU_USUARIO/meu-novo-app.git](https://github.com/SEU_USUARIO/meu-novo-app.git)
+cd meu-novo-app
+
+chmod +x init.sh scripts/install-skill.sh
+./init.sh
+3. Executar o Agente ou Cockpit Visual
+Modo Terminal: Abra o seu CLI favorito (claude, cursor, codex, opencode).
+
+Modo Cockpit Web:
 
 Bash
 cd dashboard
 npm install
 npm run dev
-Acesse http://localhost:3000 e envie a instrução inicial ao agente para realizar o bootstrapping do projeto!            
+Aceda a http://localhost:3000 para acompanhar e orquestrar visualmente.
+
+🛡️ Regras Invioláveis do Repositório
+Zero any: Estritamente proibido o uso de tipos fracos ou ignorar verificações estáticas de TypeScript.
+
+UI Isolada: Componentes de ecrã nunca acedem diretamente a clientes de banco de dados ou SDKs de backend (consulte docs/architecture.md).
+
+Testability Mandatory: Todo o elemento interativo de UI deve possuir a propriedade testID para automação E2E com Maestro.
+
+Continuous Garbage Collection: O init.sh purga ficheiros temporários, caches e sincroniza alterações nativas automaticamente.
+
+📄 Licença
+Licença MIT. Livre para utilização e customização em projetos comerciais e pessoais.
